@@ -22,8 +22,9 @@ public class MainActivity extends Activity implements OnClickListener
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		TextView screen = (TextView) findViewById(R.id.toggle_button);
-		screen.setOnClickListener(this);
+		TextView toggleButton = (TextView) findViewById(R.id.toggle_button);
+		toggleButton.setOnClickListener(this);
+		toggleFlashlight(toggleButton.getContext());
 	}
 
 	@Override
