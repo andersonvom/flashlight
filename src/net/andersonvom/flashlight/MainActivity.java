@@ -17,6 +17,8 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements OnClickListener
 {
 	public static Camera cam;
+	public static Context context;
+
 	public static final String PREF_USAGE_COUNT = "PREF_USAGE_COUNT";
 	public static final String PREF_RATED_APP = "PREF_RATED_APP";
 
@@ -29,7 +31,8 @@ public class MainActivity extends Activity implements OnClickListener
 
 		ImageView toggleButton = (ImageView) findViewById(R.id.toggle_button);
 		toggleButton.setOnClickListener(this);
-		if (cam == null) toggleFlashlight(toggleButton.getContext());
+		context = toggleButton.getContext();
+		if (cam == null) toggleFlashlight();
 	}
 
 	@Override
@@ -39,19 +42,19 @@ public class MainActivity extends Activity implements OnClickListener
 		return true;
 	}
 
+	@Override
 	public void onClick(View v)
 	{
-		Context context = v.getContext();
-		toggleFlashlight(context);
+		toggleFlashlight();
 	}
 
-	private void toggleFlashlight(Context context)
+	private void toggleFlashlight()
 	{
 		boolean hasFlash = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
 		if (hasFlash)
 		{
 			Toast.makeText(context, R.string.flashlight_toggle_msg, Toast.LENGTH_SHORT).show();
-			toggleCameraFlash(context);
+			toggleCameraFlash();
 		}
 		else
 		{
@@ -60,7 +63,7 @@ public class MainActivity extends Activity implements OnClickListener
 		}
 	}
 
-	private void toggleCameraFlash(Context context)
+	private void toggleCameraFlash()
 	{
 		if (cam == null) cam = Camera.open();
 
