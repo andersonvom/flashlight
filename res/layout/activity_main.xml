@@ -8,10 +8,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/toggle_button"
+    <ImageView android:id="@+id/toggle_button"
+        android:src="@drawable/ic_launcher"
+        android:contentDescription="@string/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        />
 
 </RelativeLayout>

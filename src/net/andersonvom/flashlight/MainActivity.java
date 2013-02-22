@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener
@@ -22,9 +22,9 @@ public class MainActivity extends Activity implements OnClickListener
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		TextView toggleButton = (TextView) findViewById(R.id.toggle_button);
+		ImageView toggleButton = (ImageView) findViewById(R.id.toggle_button);
 		toggleButton.setOnClickListener(this);
-		toggleFlashlight(toggleButton.getContext());
+		if (cam == null) toggleFlashlight(toggleButton.getContext());
 	}
 
 	@Override
