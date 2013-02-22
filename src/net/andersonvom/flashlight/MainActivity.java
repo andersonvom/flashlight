@@ -1,7 +1,6 @@
 package net.andersonvom.flashlight;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -20,7 +19,6 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements OnClickListener
 {
 	public static Camera cam;
-	public static Context context;
 	public static boolean cameraOn = true;
 	public static SharedPreferences settings;
 
@@ -35,7 +33,6 @@ public class MainActivity extends Activity implements OnClickListener
 
 		ImageView toggleButton = (ImageView) findViewById(R.id.toggle_button);
 		toggleButton.setOnClickListener(this);
-		context = toggleButton.getContext();
 		if (cam == null) toggleFlashlight();
 	}
 
@@ -83,15 +80,15 @@ public class MainActivity extends Activity implements OnClickListener
 
 	private void toggleFlashlight()
 	{
-		boolean hasFlash = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+		boolean hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
 		if (hasFlash)
 		{
-			Toast.makeText(context, R.string.flashlight_toggle_msg, Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.flashlight_toggle_msg, Toast.LENGTH_SHORT).show();
 			toggleCameraFlash();
 		}
 		else
 		{
-			Toast.makeText(context, R.string.flashlight_not_found, Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.flashlight_not_found, Toast.LENGTH_SHORT).show();
 			toggleScreen();
 		}
 	}
