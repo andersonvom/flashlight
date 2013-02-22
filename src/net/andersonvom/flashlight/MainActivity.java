@@ -18,6 +18,7 @@ public class MainActivity extends Activity implements OnClickListener
 {
 	public static Camera cam;
 	public static Context context;
+	public static boolean cameraOn = true;
 
 	public static final String PREF_USAGE_COUNT = "PREF_USAGE_COUNT";
 	public static final String PREF_RATED_APP = "PREF_RATED_APP";
@@ -45,7 +46,22 @@ public class MainActivity extends Activity implements OnClickListener
 	@Override
 	public void onClick(View v)
 	{
+		cameraOn = !cameraOn;
 		toggleFlashlight();
+	}
+
+	@Override
+	protected void onPause()
+	{
+		if (cam != null) toggleFlashlight();
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume()
+	{
+		if (cameraOn && cam == null) toggleFlashlight();
+		super.onResume();
 	}
 
 	private void toggleFlashlight()
