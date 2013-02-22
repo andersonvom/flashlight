@@ -11,6 +11,6 @@ Click it again (now inside the app) to turn it off.
 
 ### Preferences
 
-* **Do not turn off on Power Button**  
-Keeps the flashlight on even after pressing the power button and locking the screen (to save precious battery if you're running out of it)
+* **Run in Background**  
+Keeps the flashlight running in background so you can keep using the phone (or maybe save precious battery time by turning off the screen)
 
