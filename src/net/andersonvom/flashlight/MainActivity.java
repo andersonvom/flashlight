@@ -29,7 +29,6 @@ public class MainActivity extends Activity implements OnClickListener
 
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
-		updateUsageStats();
 
 		ImageView toggleButton = (ImageView) findViewById(R.id.toggle_button);
 		toggleButton.setOnClickListener(this);
@@ -67,7 +66,11 @@ public class MainActivity extends Activity implements OnClickListener
 	protected void onPause()
 	{
 		boolean runBackground = settings.getBoolean(SettingsActivity.PREF_RUN_BACKGROUND, false);
-		if (cam != null && !runBackground) toggleFlashlight();
+		if (!runBackground)
+		{
+			if (cam != null) toggleFlashlight();
+			updateUsageStats();
+		}
 		super.onPause();
 	}
 
@@ -127,7 +130,7 @@ public class MainActivity extends Activity implements OnClickListener
 		editor.putInt(SettingsActivity.PREF_USAGE_COUNT, usageCount);
 		editor.commit();
 
-		if (usageCount % 50 == 0)
+		if (usageCount % SettingsActivity.PREF_SUGGEST_MARKET_COUNT == 0)
 		{
 			suggestRateApp();
 		}
