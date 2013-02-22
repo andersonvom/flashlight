@@ -2,6 +2,7 @@ package net.andersonvom.flashlight;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
@@ -16,11 +17,15 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements OnClickListener
 {
 	public static Camera cam;
+	public static final String PREF_USAGE_COUNT = "PREF_USAGE_COUNT";
+	public static final String PREF_RATED_APP = "PREF_RATED_APP";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		updateUsageStats();
 
 		ImageView toggleButton = (ImageView) findViewById(R.id.toggle_button);
 		toggleButton.setOnClickListener(this);
@@ -79,6 +84,24 @@ public class MainActivity extends Activity implements OnClickListener
 	}
 
 	private void toggleScreen()
+	{
+	}
+
+	private void updateUsageStats()
+	{
+		SharedPreferences settings = getPreferences(0);
+		SharedPreferences.Editor editor = settings.edit();
+		int usageCount = settings.getInt(PREF_USAGE_COUNT, 0) + 1;
+		editor.putInt(PREF_USAGE_COUNT, usageCount);
+		editor.commit();
+
+		if (usageCount % 50 == 0)
+		{
+			suggestRateApp();
+		}
+	}
+
+	private void suggestRateApp()
 	{
 	}
 
