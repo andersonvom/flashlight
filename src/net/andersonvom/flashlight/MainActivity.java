@@ -29,8 +29,9 @@ public class MainActivity extends Activity implements OnClickListener
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		updateUsageStats();
+		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
+		updateUsageStats();
 
 		ImageView toggleButton = (ImageView) findViewById(R.id.toggle_button);
 		toggleButton.setOnClickListener(this);
@@ -68,7 +69,8 @@ public class MainActivity extends Activity implements OnClickListener
 	@Override
 	protected void onPause()
 	{
-		if (cam != null) toggleFlashlight();
+		boolean runBackground = settings.getBoolean(SettingsActivity.PREF_RUN_BACKGROUND, false);
+		if (cam != null && !runBackground) toggleFlashlight();
 		super.onPause();
 	}
 
