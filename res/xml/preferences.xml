@@ -2,9 +2,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <CheckBoxPreference
-        android:key="pref_power_off"
-        android:title="@string/pref_power_off"
-        android:summary="@string/pref_power_off_summ"
+        android:key="pref_run_background"
+        android:title="@string/pref_run_background"
+        android:summary="@string/pref_run_background_summ"
         android:defaultValue="false" />
 
 </PreferenceScreen>
