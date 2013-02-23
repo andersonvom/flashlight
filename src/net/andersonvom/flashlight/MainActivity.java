@@ -99,8 +99,15 @@ public class MainActivity extends Activity implements OnClickListener
 	private void toggleCameraFlash()
 	{
 		if (cam == null) cam = Camera.open();
-
 		Parameters p = cam.getParameters();
+
+		boolean supportsTorchMode = p.getSupportedFlashModes().contains(Parameters.FLASH_MODE_TORCH);
+		if (!supportsTorchMode)
+		{
+			Toast.makeText(this, R.string.torch_not_supported, Toast.LENGTH_SHORT).show();
+			return;
+		}
+
 		if (p.getFlashMode().equals(Parameters.FLASH_MODE_OFF))
 		{
 			Log.w("[Flashlight]", "Flash TORCH....");

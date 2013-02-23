@@ -6,6 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="flashlight_toggle_msg">Toggling flashlight &#8230;</string>
     <string name="flashlight_not_found">No camera flash available!</string>
+    <string name="torch_not_supported">Your device doesn\'t support TORCH flash mode</string>
 
     <!-- SETTINGS -->
     <string name="title_activity_settings">Settings</string>
