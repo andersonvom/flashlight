@@ -86,17 +86,15 @@ public class MainActivity extends Activity implements OnClickListener
 		boolean hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
 		if (hasFlash)
 		{
-			Toast.makeText(this, R.string.flashlight_toggle_msg, Toast.LENGTH_SHORT).show();
 			toggleCameraFlash();
 		}
 		else
 		{
-			Toast.makeText(this, R.string.flashlight_not_found, Toast.LENGTH_SHORT).show();
 			toggleScreen();
 		}
 	}
 
-	private void toggleCameraFlash()
+	private boolean toggleCameraFlash()
 	{
 		if (cam == null) cam = Camera.open();
 		Parameters p = cam.getParameters();
@@ -105,25 +103,29 @@ public class MainActivity extends Activity implements OnClickListener
 		if (!supportsTorchMode)
 		{
 			Toast.makeText(this, R.string.torch_not_supported, Toast.LENGTH_SHORT).show();
-			return;
+			return false;
 		}
 
 		if (p.getFlashMode().equals(Parameters.FLASH_MODE_OFF))
 		{
-			Log.w("[Flashlight]", "Flash TORCH....");
+			Log.w("[Flashlight]", "Flashlight ON");
 			p.setFlashMode(Parameters.FLASH_MODE_TORCH);
 			cam.setParameters(p);
 			cam.startPreview();
+			Toast.makeText(this, R.string.flashlight_on, Toast.LENGTH_SHORT).show();
 		}
 		else
 		{
-			Log.w("[Flashlight]", "Flash OFF...");
+			Log.w("[Flashlight]", "Flashlight OFF");
 			p.setFlashMode(Parameters.FLASH_MODE_OFF);
 			cam.setParameters(p);
 			cam.stopPreview();
 			cam.release();
 			cam = null;
+			Toast.makeText(this, R.string.flashlight_off, Toast.LENGTH_SHORT).show();
 		}
+
+		return true;
 	}
 
 	private void toggleScreen()
