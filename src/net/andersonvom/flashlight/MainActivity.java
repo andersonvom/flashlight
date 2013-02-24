@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener
@@ -21,6 +23,7 @@ public class MainActivity extends Activity implements OnClickListener
 	public static Camera cam;
 	public static boolean cameraOn = true;
 	public static SharedPreferences settings;
+	public static int currentBackgroundColor = Color.BLACK;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +133,9 @@ public class MainActivity extends Activity implements OnClickListener
 
 	private void toggleScreen()
 	{
+		currentBackgroundColor = (currentBackgroundColor == Color.BLACK) ? Color.WHITE : Color.BLACK;
+		RelativeLayout layout = (RelativeLayout) findViewById(R.id.main_activity_layout);
+		layout.setBackgroundColor(currentBackgroundColor);
 	}
 
 	private void updateUsageStats()
