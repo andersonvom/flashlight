@@ -24,6 +24,7 @@ public class MainActivity extends Activity implements OnClickListener
 	public static boolean cameraOn = true;
 	public static SharedPreferences settings;
 	public static int currentBackgroundColor = Color.BLACK;
+	public static boolean hasFlash;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class MainActivity extends Activity implements OnClickListener
 
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
+		hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
 
 		ImageView toggleButton = (ImageView) findViewById(R.id.toggle_button);
 		toggleButton.setOnClickListener(this);
@@ -86,7 +88,6 @@ public class MainActivity extends Activity implements OnClickListener
 
 	private void toggleFlashlight()
 	{
-		boolean hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
 		if (hasFlash)
 		{
 			toggleCameraFlash();
