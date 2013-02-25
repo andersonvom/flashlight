@@ -1,14 +1,19 @@
 package net.andersonvom.flashlight;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +30,7 @@ public class MainActivity extends Activity implements OnClickListener
 	public static SharedPreferences settings;
 	public static int currentBackgroundColor = Color.BLACK;
 	public static boolean hasFlash;
+	public static int MARKET_NOTIFICATION_ID = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -154,6 +160,22 @@ public class MainActivity extends Activity implements OnClickListener
 
 	private void suggestRateApp()
 	{
+		int usageCount = settings.getInt(SettingsActivity.PREF_USAGE_COUNT, 0);
+		String suggestRateTitle = getResources().getString(R.string.suggest_rate_title);
+
+		Uri marketUri = Uri.parse("market://details?id=" + this.getPackageName());
+		Intent marketIntent = new Intent(Intent.ACTION_VIEW, marketUri);
+		PendingIntent pendingMarket = PendingIntent.getActivity(this, 0, marketIntent, 0);
+
+		NotificationCompat.Builder marketBuilder = new NotificationCompat.Builder(this)
+			.setSmallIcon(R.drawable.ic_launcher)
+			.setContentTitle(String.format(suggestRateTitle, usageCount))
+			.setContentText(getResources().getString(R.string.suggest_rate_body))
+			.setContentIntent(pendingMarket)
+			.setAutoCancel(true);
+
+		NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		manager.notify(MARKET_NOTIFICATION_ID, marketBuilder.build());
 	}
 
 }
