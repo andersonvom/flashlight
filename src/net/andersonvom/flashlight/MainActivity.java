@@ -152,7 +152,8 @@ public class MainActivity extends Activity implements OnClickListener
 		editor.putInt(SettingsActivity.PREF_USAGE_COUNT, usageCount);
 		editor.commit();
 
-		if (usageCount % SettingsActivity.PREF_SUGGEST_MARKET_COUNT == 0)
+		if (   usageCount == SettingsActivity.PREF_SUGGEST_MARKET_COUNT_FIRST
+			|| usageCount == SettingsActivity.PREF_SUGGEST_MARKET_COUNT_LAST)
 		{
 			suggestRateApp();
 		}
