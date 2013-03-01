@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
@@ -72,6 +73,13 @@ public class MainActivity extends Activity implements OnClickListener
 	public void onClick(View v)
 	{
 		toggleFlashlight();
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig)
+	{
+		// This is only to prevent onPause/onResume from being called when rotating the phone
+		super.onConfigurationChanged(newConfig);
 	}
 
 	@Override
