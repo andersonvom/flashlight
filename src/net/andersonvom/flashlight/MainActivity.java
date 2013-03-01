@@ -92,6 +92,14 @@ public class MainActivity extends Activity implements OnClickListener
 		super.onResume();
 	}
 
+	private boolean isCameraOn()
+	{
+		boolean cameraStatus;
+		if (hasFlash) cameraStatus = (cam == null);
+		else cameraStatus = (currentBackgroundColor == Color.WHITE);
+		return cameraStatus;
+	}
+
 	private void toggleFlashlight()
 	{
 		if (hasFlash)
