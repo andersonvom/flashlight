@@ -26,7 +26,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements OnClickListener
 {
 	public static Camera cam;
-	public static boolean cameraOn = true;
+	public static boolean lastCameraStatus = true;
 	public static SharedPreferences settings;
 	public static int currentBackgroundColor = Color.BLACK;
 	public static boolean hasFlash;
@@ -43,7 +43,9 @@ public class MainActivity extends Activity implements OnClickListener
 
 		ImageView toggleButton = (ImageView) findViewById(R.id.toggle_button);
 		toggleButton.setOnClickListener(this);
-		if (cam == null) toggleFlashlight();
+
+		setScreenColor(currentBackgroundColor);
+		if (!isCameraOn() && lastCameraStatus) toggleFlashlight();
 	}
 
 	@Override
@@ -69,7 +71,6 @@ public class MainActivity extends Activity implements OnClickListener
 	@Override
 	public void onClick(View v)
 	{
-		cameraOn = !cameraOn;
 		toggleFlashlight();
 	}
 
@@ -77,9 +78,10 @@ public class MainActivity extends Activity implements OnClickListener
 	protected void onPause()
 	{
 		boolean runBackground = settings.getBoolean(SettingsActivity.PREF_RUN_BACKGROUND, false);
+		lastCameraStatus = isCameraOn();
 		if (!runBackground)
 		{
-			if (cam != null) toggleFlashlight();
+			if (lastCameraStatus) toggleFlashlight();
 			updateUsageStats();
 		}
 		super.onPause();
@@ -88,14 +90,15 @@ public class MainActivity extends Activity implements OnClickListener
 	@Override
 	protected void onResume()
 	{
-		if (cameraOn && cam == null) toggleFlashlight();
+		if (lastCameraStatus && !isCameraOn())
+			toggleFlashlight();
 		super.onResume();
 	}
 
 	private boolean isCameraOn()
 	{
 		boolean cameraStatus;
-		if (hasFlash) cameraStatus = (cam == null);
+		if (hasFlash) cameraStatus = (cam != null);
 		else cameraStatus = (currentBackgroundColor == Color.WHITE);
 		return cameraStatus;
 	}
@@ -121,6 +124,7 @@ public class MainActivity extends Activity implements OnClickListener
 		if (!supportsTorchMode)
 		{
 			Toast.makeText(this, R.string.torch_not_supported, Toast.LENGTH_SHORT).show();
+			toggleScreen();
 			return false;
 		}
 
