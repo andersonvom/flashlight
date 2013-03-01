@@ -141,8 +141,13 @@ public class MainActivity extends Activity implements OnClickListener
 	private void toggleScreen()
 	{
 		currentBackgroundColor = (currentBackgroundColor == Color.BLACK) ? Color.WHITE : Color.BLACK;
+		setScreenColor(currentBackgroundColor);
+	}
+
+	private void setScreenColor(int color)
+	{
 		RelativeLayout layout = (RelativeLayout) findViewById(R.id.main_activity_layout);
-		layout.setBackgroundColor(currentBackgroundColor);
+		layout.setBackgroundColor(color);
 	}
 
 	private void updateUsageStats()
