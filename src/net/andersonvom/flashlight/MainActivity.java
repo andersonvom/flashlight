@@ -131,6 +131,7 @@ public class MainActivity extends Activity implements OnClickListener
 		boolean supportsTorchMode = p.getSupportedFlashModes().contains(Parameters.FLASH_MODE_TORCH);
 		if (!supportsTorchMode)
 		{
+			// TODO: show this message only once
 			Toast.makeText(this, R.string.torch_not_supported, Toast.LENGTH_SHORT).show();
 			toggleScreen();
 			return false;
